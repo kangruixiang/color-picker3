@@ -4,7 +4,7 @@
 	import { tweened } from 'svelte/motion';
 	import { sineOut } from 'svelte/easing';
 
-	import MainColor from '$lib/MainColor.svelte';
+	import MainColor from '$lib/MainColor2.svelte';
 	import RandomButton from '$lib/RandomButton.svelte';
 	import ColorLibrary from '$lib/ColorLibrary.svelte';
 	import SlidersCard from '$lib/SlidersCard.svelte';

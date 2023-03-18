@@ -112,14 +112,16 @@ export function rgbToHex(red: number, green: number, blue: number) {
 }
 
 export function rgbToCmyk(red: number, green: number, blue: number) {
-	const r = red / 255;
-	const g = green / 255;
-	const b = blue / 255;
+	const computedC = 1 - (red / 255);
+	const computedM = 1 - (green / 255);
+	const computedY = 1 - (blue / 255);
 
-	const k = +(1 - Math.max(r, g, b))
-	const c = +((1 - r - k) / (1 - k) || 0)
-	const m = +((1 - g - k) / (1 - k) || 0)
-	const y = +((1 - b - k) / (1 - k) || 0);
+	const minCMY = Math.min(computedC, Math.min(computedM, computedY))
+
+	const k = minCMY
+	const c = (computedC - minCMY) / (1 - minCMY) || 0
+	const m = (computedM - minCMY) / (1 - minCMY) || 0
+	const y = (computedY - minCMY) / (1 - minCMY) || 0
 
 	function multiplyAndRound(color: number) {
 		return +(color * 100).toFixed()

@@ -1,80 +1,67 @@
 <script type="ts">
-	export let data = 0;
+	import { mainColor } from '$lib/stores';
+	import { tweened } from 'svelte/motion';
 	export let min = 0;
 	export let max = 100;
 	export let step = 1;
-	export let color;
+	export let color: number;
+	export let value: string;
 	export let background = 'background: gray';
-	import { hexToHSL, rgbToHex, cmykToRgb } from '$lib/process';
-	import {
-		value0,
-		value100,
-		saturation0,
-		saturation100,
-		textColor,
-		hsv,
-		rgb,
-		cmyk
-	} from '$lib/stores';
 
-	function changeColor(event, color) {
-		let newHex = '';
-		if (color == 'hue') {
-			$hsv.hue = event.target.valueAsNumber;
-			return;
-		}
-		if (color == 'saturation') {
-			$hsv.saturation = event.target.valueAsNumber;
-			return;
-		}
-		if (color == 'value') {
-			$hsv.value = event.target.valueAsNumber;
-			return;
-		}
-		if (color == 'red') {
-			newHex = rgbToHex(event.target.valueAsNumber, $rgb.green, $rgb.blue);
-		}
-		if (color == 'green') {
-			newHex = rgbToHex($rgb.red, event.target.valueAsNumber, $rgb.blue);
-		}
-		if (color == 'blue') {
-			newHex = rgbToHex($rgb.red, $rgb.green, event.target.valueAsNumber);
-		}
-		if (color == 'yellow') {
-			const newRGB = cmykToRgb($cmyk.cyan, $cmyk.magenta, event.target.valueAsNumber, $cmyk.key);
-			newHex = rgbToHex(newRGB.red, newRGB.green, newRGB.blue);
-		}
-		if (color == 'cyan') {
-			const newRGB = cmykToRgb(event.target.valueAsNumber, $cmyk.magenta, $cmyk.yellow, $cmyk.key);
-			newHex = rgbToHex(newRGB.red, newRGB.green, newRGB.blue);
-		}
-		if (color == 'magenta') {
-			const newRGB = cmykToRgb($cmyk.cyan, event.target.valueAsNumber, $cmyk.yellow, $cmyk.key);
-			newHex = rgbToHex(newRGB.red, newRGB.green, newRGB.blue);
-		}
-		if (color == 'key') {
-			const newRGB = cmykToRgb($cmyk.cyan, $cmyk.magenta, $cmyk.yellow, event.target.valueAsNumber);
-			newHex = rgbToHex(newRGB.red, newRGB.green, newRGB.blue);
+	let color2 = tweened(color);
+
+	function changeColor() {
+		if (value === 'red') {
+			mainColor.fromRGB(color, $mainColor.green, $mainColor.blue);
 		}
 
-		const newHSV = hexToHSL(newHex);
-		$hsv.hue = newHSV.hue;
-		$hsv.saturation = newHSV.saturation;
-		$hsv.value = newHSV.value;
+		if (value === 'green') {
+			mainColor.fromRGB($mainColor.red, color, $mainColor.blue);
+		}
+
+		if (value === 'blue') {
+			mainColor.fromRGB($mainColor.red, $mainColor.green, color);
+		}
+
+		if (value === 'hue') {
+			mainColor.fromHSL(color, $mainColor.saturation, $mainColor.value);
+		}
+
+		if (value === 'saturation') {
+			mainColor.fromHSL($mainColor.hue, color, $mainColor.value);
+		}
+
+		if (value === 'value') {
+			mainColor.fromHSL($mainColor.hue, $mainColor.saturation, color);
+		}
+
+		if (value === 'cyan') {
+			mainColor.fromCMYK(color, $mainColor.magenta, $mainColor.yellow, $mainColor.key);
+		}
+		if (value === 'magenta') {
+			mainColor.fromCMYK($mainColor.cyan, color, $mainColor.yellow, $mainColor.key);
+		}
+		if (value === 'yellow') {
+			mainColor.fromCMYK($mainColor.cyan, $mainColor.magenta, color, $mainColor.key);
+		}
+		if (value === 'key') {
+			mainColor.fromCMYK($mainColor.cyan, $mainColor.magenta, $mainColor.yellow, color);
+		}
 	}
 </script>
 
 <div class="w-full text-zinc-800">
 	<label for="slider" class="" />
 	<slot />
+
 	<div class="flex items-center">
 		<input
 			type="range"
 			class="slider w-full appearance-none h-4"
 			tabindex="-1"
 			style={background}
-			value={data}
-			on:input={(e) => changeColor(e, color)}
+			bind:value={color}
+			on:input={changeColor}
 			{min}
 			{max}
 			{step}
@@ -82,8 +69,9 @@
 
 		<input
 			type="number"
-			class="px-2 py-2 font-semibold rounded-md focus:ring-0 focus:outline-none w-12"
-			value={Math.round(data)}
+			class="ml-2 px-2 py-2 font-semibold rounded-md focus:ring-0 focus:outline-none w-12 border "
+			bind:value={color}
+			on:input={changeColor}
 		/>
 	</div>
 </div>

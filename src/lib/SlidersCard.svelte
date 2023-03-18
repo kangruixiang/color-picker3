@@ -1,75 +1,104 @@
 <script lang="ts">
 	import Slider from '$lib/Slider.svelte';
-	import { hexToHSL, rgbToHex, cmykToRgb } from '$lib/process';
-	import {
-		value0,
-		value100,
-		saturation0,
-		saturation100,
-		textColor,
-		hsv,
-		rgb,
-		cmyk
-	} from '$lib/stores';
+	import { mainColor, value0, value100, saturation0, saturation100, textColor } from '$lib/stores';
+
+	$: listOfProps = [
+		{
+			color: $mainColor.hue,
+			value: 'hue',
+			max: 360,
+			background:
+				'background: linear-gradient(to right, #d42b2b 0%, #cdcd32 17%, #54ab54 33%, #55aaaa 50%, #2020df 67%, #ab54ab 83%, #d42b2b 100%);'
+		},
+		{
+			color: $mainColor.saturation,
+			value: 'saturation',
+			max: 100,
+			background: `background: linear-gradient(to right, ${$saturation0}, ${$saturation100})`
+		},
+		{
+			color: $mainColor.value,
+			value: 'value',
+			max: 100,
+			background: `background: linear-gradient(to right, ${$value0}, ${$value100})`
+		},
+		{
+			color: $mainColor.red,
+			value: 'red',
+			max: 255,
+			background: 'background: linear-gradient(to right, #808080, #cc3333);'
+		},
+		{
+			color: $mainColor.green,
+			value: 'green',
+			max: 255,
+			background: 'background: linear-gradient(to right, #808080, #33cc33);'
+		},
+		{
+			color: $mainColor.blue,
+			value: 'blue',
+			max: 255,
+			background: 'background: linear-gradient(to right, #808080, #3333cc);'
+		},
+		{
+			color: $mainColor.cyan,
+			value: 'cyan',
+			max: 100,
+			background: 'background: linear-gradient(to right, #808080, #4ca0c8);'
+		},
+		{
+			color: $mainColor.magenta,
+			value: 'magenta',
+			max: 100,
+			background: 'background: linear-gradient(to right, #808080, #c25b5b);'
+		},
+		{
+			color: $mainColor.yellow,
+			value: 'yellow',
+			max: 100,
+			background: 'background: linear-gradient(to right, #808080, #ecda83);'
+		}
+	];
+	$: hsvProps = listOfProps.slice(0, 3);
+	$: rgbProps = listOfProps.slice(3, 6);
+	$: cmyProps = listOfProps.slice(6, 9);
 </script>
 
 <div class="flex flex-col space-y-4 font-semibold">
 	<div class="flex flex-col border border-zinc-600 rounded-md p-4">
-		<Slider
-			data={$hsv.hue}
-			min={0}
-			max={360}
-			color={'hue'}
-			background="background: linear-gradient(to right, #d42b2b 0%, #cdcd32 17%, #54ab54 33%, #55aaaa 50%, #2020df 67%, #ab54ab 83%, #d42b2b 100%);"
-			>Hue</Slider
-		>
-		<Slider
-			data={$hsv.saturation}
-			color={'saturation'}
-			background="background: linear-gradient(to right, {$saturation0}, {$saturation100});"
-			>Saturation</Slider
-		>
-		<Slider
-			data={$hsv.value}
-			color={'value'}
-			background="background: linear-gradient(to right, {$value0}, {$value100});">Value</Slider
-		>
+		{#each hsvProps as item}
+			<Slider
+				color={item.color}
+				value={item.value}
+				min={0}
+				max={item.max}
+				background={item.background}
+				>{item.value.charAt(0).toUpperCase()}{item.value.slice(1)}</Slider
+			>
+		{/each}
 	</div>
 	<div class="flex flex-col border border-zinc-600 rounded-md p-4">
-		<Slider
-			data={$rgb.red}
-			color={'red'}
-			max={255}
-			background="background: linear-gradient(to right, #f9d7d7, #c25b5b);">Red</Slider
-		>
-		<Slider
-			data={$rgb.green}
-			color={'green'}
-			max={255}
-			background="background: linear-gradient(to right, #d4f2e7, #73d4b2);">Green</Slider
-		>
-		<Slider
-			data={$rgb.blue}
-			color={'blue'}
-			max={255}
-			background="background: linear-gradient(to right, #d4e8f2, #4ca0c8);">Blue</Slider
-		>
+		{#each rgbProps as item}
+			<Slider
+				color={item.color}
+				value={item.value}
+				min={0}
+				max={item.max}
+				background={item.background}
+				>{item.value.charAt(0).toUpperCase()}{item.value.slice(1)}</Slider
+			>
+		{/each}
 	</div>
 	<div class="flex flex-col border border-zinc-600 rounded-md p-4">
-		<Slider
-			data={$cmyk.cyan}
-			color={'cyan'}
-			background="background: linear-gradient(to right, #d4e8f2, #4ca0c8);">Cyan</Slider
-		>
-		<Slider
-			data={$cmyk.magenta}
-			color={'magenta'}
-			background="background: linear-gradient(to right, #f9d7d7, #c25b5b);">Magenta</Slider
-		>
-		<Slider
-			data={$cmyk.yellow}
-			color={'yellow'}
-			background="background: linear-gradient(to right, #f7efca, #ecda83);">Yellow</Slider
-		>
+		{#each cmyProps as item}
+			<Slider
+				color={item.color}
+				value={item.value}
+				min={0}
+				max={item.max}
+				background={item.background}
+				>{item.value.charAt(0).toUpperCase()}{item.value.slice(1)}</Slider
+			>
+		{/each}
 	</div>
 </div>

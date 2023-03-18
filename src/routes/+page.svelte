@@ -23,10 +23,12 @@
 				hsv: {$mainColor.hue}
 				{$mainColor.saturation}
 				{$mainColor.value}<br />
-				hex: {$mainColor.hex}<br />
 				rgb: {$mainColor.red}
 				{$mainColor.green}
 				{$mainColor.blue}<br />
+				cmy: {$mainColor.cyan}
+				{$mainColor.magenta}
+				{$mainColor.yellow}<br />
 			</p>
 		</div>
 	</div>

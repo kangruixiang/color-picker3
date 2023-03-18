@@ -157,3 +157,4 @@ export function constArray(start: number, stop: number, step: number) {
 	}, (value, index) => start + index * step
 	)
 }
+

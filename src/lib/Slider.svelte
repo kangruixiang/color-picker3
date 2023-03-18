@@ -5,8 +5,8 @@
 	export let max = 100;
 	export let step = 1;
 	export let color: number;
-	export let value: string;
-	export let background = 'background: gray';
+	export let value = '';
+	export let background = 'background: #cecfcf';
 
 	let color2 = tweened(color);
 
@@ -50,14 +50,14 @@
 	}
 </script>
 
-<div class="w-full text-zinc-800">
+<div class="w-full ">
 	<label for="slider" class="" />
 	<slot />
 
 	<div class="flex items-center">
 		<input
 			type="range"
-			class="slider w-full appearance-none h-4"
+			class="slider w-full appearance-none rounded-md"
 			tabindex="-1"
 			style={background}
 			bind:value={color}
@@ -69,7 +69,7 @@
 
 		<input
 			type="number"
-			class="ml-2 px-2 py-2 font-semibold rounded-md focus:ring-0 focus:outline-none w-12 border "
+			class="ml-2 px-2 py-2 font-semibold rounded-md focus:ring-0 focus:outline-none w-12 border dark:bg-[#1a1a1f] dark:border-none"
 			bind:value={color}
 			on:input={changeColor}
 		/>
@@ -77,32 +77,33 @@
 </div>
 
 <style>
+	.slider {
+		height: 10px;
+	}
+
 	.slider::-webkit-slider-thumb {
 		-webkit-appearance: none; /* Override default look */
-		appearance: none;
-		width: 20px; /* Set a specific slider handle width */
-		height: 20px; /* Slider handle height */
-		background: #282828; /* Green background */
-		cursor: pointer; /* Cursor on hover */
-		/* border-radius: 100%; */
+		width: 18px;
+		height: 18px;
+		background: #253755;
+		cursor: pointer;
+		border-radius: 100%;
 		border: none;
+		transition: background-color 200ms ease;
 	}
 
 	.slider::-moz-range-thumb {
-		width: 18px; /* Set a specific slider handle width */
-		height: 18px; /* Slider handle height */
-		background: #282828; /* Green background */
-		cursor: pointer; /* Cursor on hover */
-		/* border-radius: 100%; */
+		width: 18px;
+		height: 18px;
+		background: #253755;
+		cursor: pointer;
+		border-radius: 100%;
 		border: none;
-		/* border: 1px solid #191919; */
-		/* box-shadow: #7e7e7e 0px 2px 3px 0px; */
-		transition: width 150ms, height 150ms;
+		transition: background-color 200ms ease;
 	}
 
 	.slider::-moz-range-thumb:active {
-		width: 10px;
-		height: 40px;
+		background: #3e5070;
 	}
 
 	input[type='number']::-webkit-inner-spin-button {
@@ -111,5 +112,14 @@
 
 	input[type='number'] {
 		-moz-appearance: textfield;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.slider::-moz-range-thumb {
+			background: #f1f1f1;
+		}
+		.slider::-moz-range-thumb:active {
+			background: #f1f1f1;
+		}
 	}
 </style>

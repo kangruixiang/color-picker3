@@ -1,7 +1,7 @@
 import { derived, writable } from 'svelte/store';
-import { tweened } from 'svelte/motion';
-import { sineOut } from 'svelte/easing';
-import { hslToHex, hexToRGB, rgbToHex, rgbToCmyk, hexToHSL, cmykToHex, hslToCMYK } from './process';
+// import { tweened } from 'svelte/motion';
+// import { sineOut } from 'svelte/easing';
+import { hslToHex, hexToRGB, rgbToHex, rgbToCmyk, hexToHSL, cmykToHex, hslToCMYK, constArray } from './process';
 
 
 function randomValue(max: number) {
@@ -76,7 +76,11 @@ export const saturation100 = derived(mainColor, $mainColor => hslToHex($mainColo
 export const value0 = derived(mainColor, $mainColor => hslToHex($mainColor.hue, $mainColor.saturation, 10))
 export const value100 = derived(mainColor, $mainColor => hslToHex($mainColor.hue, $mainColor.saturation, 90))
 
+export const satIncrement = writable(1)
+export const valIncrement = writable(1)
 
 export const textColor = '#d4d4d8';
 export const textColorLight = '#d4d4d8';
 export const textColorDark = '#11110d';
+
+

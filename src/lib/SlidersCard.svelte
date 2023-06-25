@@ -64,8 +64,8 @@
 	$: cmyProps = listOfProps.slice(6, 9);
 </script>
 
-<div class="flex flex-col space-y-4 font-semibold ">
-	<div class="flex flex-col border border-zinc-400 dark:border-zinc-700 rounded-md p-4">
+<div class="flex flex-col space-y-4 font-semibold dark:text-zinc-200">
+	<div class="flex flex-col border-2 border-zinc-400 dark:border-black rounded-md p-4">
 		{#each hsvProps as item}
 			<Slider
 				color={item.color}
@@ -77,7 +77,7 @@
 			>
 		{/each}
 	</div>
-	<div class="flex flex-col border border-zinc-400 dark:border-zinc-700 rounded-md p-4">
+	<div class="flex flex-col border-2 border-zinc-400 dark:border-black rounded-md p-4">
 		{#each rgbProps as item}
 			<Slider
 				color={item.color}
@@ -89,7 +89,7 @@
 			>
 		{/each}
 	</div>
-	<div class="flex flex-col border border-zinc-400 dark:border-zinc-700 rounded-md p-4">
+	<div class="flex flex-col border-2 border-zinc-400 dark:border-black rounded-md p-4">
 		{#each cmyProps as item}
 			<Slider
 				color={item.color}

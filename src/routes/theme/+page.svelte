@@ -5,7 +5,7 @@
 	import { constArray, hslToHex } from '$lib/process';
 	import Alternate from '$lib/Alternate.svelte';
 
-	const incrementList = constArray(-8, 8, 1).filter((item) => item != 0);
+	const incrementList = constArray(-4, 4, 1).filter((item) => item != 0);
 
 	$: saturationAlt = incrementList.map((increment) => {
 		return Math.max(0, Math.min($mainColor.saturation - increment * $satIncrement, 100));
@@ -25,7 +25,7 @@
 </div>
 
 <div
-	class="text-zinc-300 grid md:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-12 gap-y-4 overflow-y-auto py-10 px-8 auto-rows-min xl:content-center w-full"
+	class="text-zinc-300 grid gap-4 md:gap-8 grid-cols-2 md:grid-cols-4 py-10 px-8 auto-rows-min w-full"
 >
 	{#each incrementList as step, i}
 		<div>

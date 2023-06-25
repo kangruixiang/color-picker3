@@ -103,7 +103,7 @@
 	}
 
 	.slider::-moz-range-thumb:active {
-		background: #3e5070;
+		background: #000;
 	}
 
 	input[type='number']::-webkit-inner-spin-button {
@@ -116,10 +116,10 @@
 
 	@media (prefers-color-scheme: dark) {
 		.slider::-moz-range-thumb {
-			background: #f1f1f1;
+			background: #000;
 		}
 		.slider::-moz-range-thumb:active {
-			background: #f1f1f1;
+			background: #000;
 		}
 	}
 </style>
